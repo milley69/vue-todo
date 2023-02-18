@@ -73,6 +73,7 @@ h3 {
   position: relative;
   place-content: center;
   place-items: center;
+  width: -moz-fit-content;
   width: fit-content;
   border-radius: 99px;
   letter-spacing: 0.05em;
@@ -224,6 +225,7 @@ h3 {
   text-transform: capitalize;
 }
 .card {
+  width: -moz-fit-content;
   width: fit-content;
   text-align: center;
   display: flex;
@@ -261,6 +263,7 @@ h3 {
 .list-item:hover {
   background: rgba(66, 185, 131, 0.5);
 }
+
 .list-item__icons {
   display: flex;
   align-items: center;

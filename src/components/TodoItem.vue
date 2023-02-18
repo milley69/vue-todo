@@ -20,7 +20,6 @@
       ></box-icon>
     </div>
   </li>
-  <!-- <li :class="['list-item', { done: todo.done }]">{{ todo.task }}</li> -->
 </template>
 <script>
 export default {
@@ -35,3 +34,14 @@ export default {
   // },
 }
 </script>
+<style>
+@media screen and (min-width: 1000px) {
+  .list-item:hover .list-item__icons {
+    opacity: 1;
+  }
+  .list-item__icons {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+}
+</style>

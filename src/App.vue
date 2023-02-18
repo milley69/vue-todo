@@ -12,6 +12,7 @@
           maxlength="25"
           v-model.trim="inputTask"
           @keypress.enter.prevent="addTodo()"
+          aria-label="Search"
         />
         <input
           v-else
@@ -24,6 +25,7 @@
           v-if="!edit.editable"
           @click.prevent="addTodo()"
           class="btn"
+          type="button"
         >
           Add task
         </button>
@@ -31,6 +33,7 @@
           v-else
           @click.prevent="editTodoBtn()"
           class="btn"
+          type="button"
         >
           Edit task
         </button>
@@ -41,16 +44,6 @@
         v-if="todos.length"
       >
         <ul class="list">
-          <!-- <TodoItem
-            v-for="(todo, index) in todos"
-            :key="index"
-            :todo="todo"
-            :index="index"
-            @remove="removeTodo"
-            @done="doneTodo"
-            @edit="editTodo"
-          >
-          </TodoItem> -->
           <TodoItem
             v-for="(todo, index) in todos"
             :key="index"
@@ -61,35 +54,40 @@
             @edit="editTodo"
           />
         </ul>
-        <hr />
-        <h5>
-          Total tasks: <span class="primary">{{ todos.length }} </span> | Completed tasks:
-          <span class="primary">{{ todosDone }}</span>
-        </h5>
-        <h5
-          @click="deleteAlltodos"
-          class="del-btn"
-        >
-          Delete all tasks
-        </h5>
+        <Total
+          :todos="todos.length"
+          :todosDone="todosDone"
+          @deleteAlltodos="deleteAlltodos"
+        />
       </div>
       <h4 v-else>There are no tasks!</h4>
     </div>
+    <span class="made"
+      >Made by
+      <a
+        href="http://github.com/milley69"
+        target="_blank"
+        rel="noopener noreferrer"
+        >milley</a
+      ></span
+    >
   </div>
 </template>
 
 <script>
 import TodoItem from './components/TodoItem.vue'
+import Total from './components/Total.vue'
 export default {
   components: {
     TodoItem,
+    Total,
   },
   data() {
     return {
       title: 'task list',
       inputTask: '',
       edit: { editable: false, index: 0 },
-      todos: [{ id: 0, task: 'Learn JavaScript', done: false }],
+      todos: [],
       // todos: [
       //   { id: 0, task: 'Learn JavaScript', done: true },
       //   { id: 1, task: 'Learn Script', done: false },
@@ -134,11 +132,12 @@ export default {
       this.setLocalStorage()
     },
     editTodo(index) {
-      this.todos[index].edit = true
-      this.edit.editable = true
-      this.edit.index = index
-      this.inputTask = this.todos[index].task
-      // console.log(this.todos)
+      if (!this.edit.editable) {
+        this.todos[index].edit = true
+        this.edit.editable = true
+        this.edit.index = index
+        this.inputTask = this.todos[index].task
+      }
     },
     deleteAlltodos() {
       this.todos = []
@@ -160,5 +159,9 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>
+<style scoped>
+.made {
+  font-size: 11px;
+  opacity: 0.8;
+}
+</style>
